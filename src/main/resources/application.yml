@@ -1,0 +1,345 @@
+spring:
+  application:
+    name: spring-app
+    version: '@project.version@'
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  main:
+    banner-mode: console
+    lazy-initialization: false
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/appdb}
+    username: ${DB_USERNAME:appuser}
+    password: ${DB_PASSWORD:apppass}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: HikariPool-${spring.application.name}
+      data-source-properties:
+        reWriteBatchedInserts: true
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 16
+        jdbc:
+          batch_size: 25
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+        query:
+          in_clause_parameter_padding: true
+        generate_statistics: false
+        enable_lazy_load_no_trans: false
+        connection:
+          provider_disables_autocommit: true
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+    out-of-order: false
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:redispass}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 2
+          max-wait: -1ms
+        shutdown-timeout: 100ms
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000
+      cache-null-values: false
+      enable-statistics: true
+      key-prefix: ${spring.application.name}:
+
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      fail-on-unknown-properties: false
+      accept-single-value-as-array: true
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: false
+    time-zone: UTC
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+
+  security:
+    user:
+      name: admin
+      password: ${ADMIN_PASSWORD:admin123}
+
+  task:
+    execution:
+      pool:
+        core-size: 2
+        max-size: 10
+        queue-capacity: 100
+        keep-alive: 60s
+      thread-name-prefix: async-task-
+      shutdown:
+        await-termination: true
+        await-termination-period: 30s
+
+    scheduling:
+      pool:
+        size: 2
+      thread-name-prefix: scheduling-
+      shutdown:
+        await-termination: true
+        await-termination-period: 30s
+
+server:
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+  forward-headers-strategy: framework
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+    path: /error
+
+  http2:
+    enabled: true
+
+  undertow:
+    threads:
+      io: 4
+      worker: 20
+    buffer-size: 1024
+    direct-buffers: true
+
+management:
+  server:
+    port: ${MANAGEMENT_PORT:8081}
+
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,env,configprops,threaddump,heapdump,loggers,mappings,caches
+      base-path: /actuator
+
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      percentiles:
+        http.server.requests: 0.5, 0.90, 0.95, 0.99
+    tags:
+      application: ${spring.application.name}
+      environment: ${spring.profiles.active}
+    export:
+      prometheus:
+        enabled: true
+
+  health:
+    db:
+      enabled: true
+    redis:
+      enabled: true
+    diskspace:
+      enabled: true
+      threshold: 10MB
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    try-it-out-enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+    disable-swagger-default-url: true
+    deep-linking: true
+    persist-authorization: true
+  packages-to-scan: com.example.template.controller
+  paths-to-match: /api/**
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+
+logging:
+  level:
+    root: INFO
+    com.example.template: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+    org.springframework.cache: DEBUG
+    io.lettuce: DEBUG
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%15.15t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}'
+  file:
+    name: logs/${spring.application.name}.log
+    max-size: 10MB
+    max-history: 30
+    total-size-cap: 1GB
+
+# Custom application properties
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:mySecretKey_ThisShouldBeAtLeast256BitsLongForHS256Algorithm}
+      expiration: 86400000 # 24 hours
+      refresh-expiration: 604800000 # 7 days
+    cors:
+      allowed-origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:8080}
+      allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
+      allowed-headers: "*"
+      exposed-headers: Authorization,Content-Type,X-Total-Count
+      allow-credentials: true
+      max-age: 3600
+
+  rate-limiting:
+    enabled: true
+    requests-per-minute: 60
+    requests-per-hour: 1000
+
+  file-upload:
+    max-size: 10MB
+    allowed-extensions: jpg,jpeg,png,gif,pdf,doc,docx
+    storage-path: ${FILE_STORAGE_PATH:./uploads}
+
+  async:
+    core-pool-size: 2
+    max-pool-size: 10
+    queue-capacity: 100
+
+  scheduled:
+    cleanup-old-sessions: "0 0 2 * * ?"
+    generate-reports: "0 0 6 * * MON"
+
+---
+# Development profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/kotlin
+    livereload:
+      enabled: true
+
+logging:
+  level:
+    root: DEBUG
+    com.example.template: DEBUG
+
+---
+# Test profile
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    enabled: false
+
+---
+# Production profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  jpa:
+    show-sql: false
+
+  cache:
+    redis:
+      time-to-live: 7200000
+
+logging:
+  level:
+    root: WARN
+    com.example.template: INFO
+    org.springframework: WARN
+    org.hibernate: WARN
+
+server:
+  error:
+    include-stacktrace: never
+    include-message: never
+
+springdoc:
+  swagger-ui:
+    enabled: false

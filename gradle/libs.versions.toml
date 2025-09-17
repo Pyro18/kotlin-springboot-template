@@ -1,0 +1,97 @@
+[versions]
+kotlin = "1.9.25"
+spring-boot = "3.3.4"
+spring-dependency-management = "1.1.6"
+springdoc = "2.6.0"
+testcontainers = "1.20.2"
+kotest = "5.9.1"
+mockk = "1.13.12"
+postgresql = "42.7.4"
+flyway = "10.19.0"
+redis = "5.2.0.RELEASE"
+lettuce = "6.3.2.RELEASE"
+mapstruct = "1.5.5.Final"
+jackson = "2.17.2"
+micrometer = "1.13.4"
+logstash = "8.0"
+jib = "3.4.3"
+detekt = "1.23.7"
+ktlint = "12.1.1"
+kotlinx-coroutines = "1.8.1"
+r2dbc-postgresql = "1.0.5.RELEASE"
+arrow = "1.2.4"
+
+[libraries]
+# Spring Boot
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "spring-boot" }
+spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa", version.ref = "spring-boot" }
+spring-boot-starter-data-r2dbc = { group = "org.springframework.boot", name = "spring-boot-starter-data-r2dbc", version.ref = "spring-boot" }
+spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "spring-boot" }
+spring-boot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation", version.ref = "spring-boot" }
+spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator", version.ref = "spring-boot" }
+spring-boot-starter-cache = { group = "org.springframework.boot", name = "spring-boot-starter-cache", version.ref = "spring-boot" }
+spring-boot-starter-data-redis = { group = "org.springframework.boot", name = "spring-boot-starter-data-redis", version.ref = "spring-boot" }
+spring-boot-configuration-processor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor", version.ref = "spring-boot" }
+
+# Kotlin
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-reactor = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version.ref = "kotlinx-coroutines" }
+
+# Database
+postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
+r2dbc-postgresql = { group = "org.postgresql", name = "r2dbc-postgresql", version.ref = "r2dbc-postgresql" }
+flyway-core = { group = "org.flywaydb", name = "flyway-core", version.ref = "flyway" }
+flyway-database-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flyway" }
+
+# Documentation
+springdoc-openapi-starter-webmvc-ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+
+# Mapping
+mapstruct = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct" }
+
+# Jackson
+jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson" }
+jackson-datatype-jsr310 = { group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version.ref = "jackson" }
+
+# Monitoring
+micrometer-registry-prometheus = { group = "io.micrometer", name = "micrometer-registry-prometheus", version.ref = "micrometer" }
+logstash-logback-encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version = { strictly = "[8.0, 9.0)" } }
+
+# Redis
+lettuce-core = { group = "io.lettuce", name = "lettuce-core", version.ref = "lettuce" }
+
+# Arrow (Functional Programming)
+arrow-core = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
+arrow-fx-coroutines = { group = "io.arrow-kt", name = "arrow-fx-coroutines", version.ref = "arrow" }
+
+# Testing
+spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "spring-boot" }
+spring-security-test = { group = "org.springframework.security", name = "spring-security-test" }
+testcontainers = { group = "org.testcontainers", name = "testcontainers", version.ref = "testcontainers" }
+testcontainers-postgresql = { group = "org.testcontainers", name = "postgresql", version.ref = "testcontainers" }
+testcontainers-junit-jupiter = { group = "org.testcontainers", name = "junit-jupiter", version.ref = "testcontainers" }
+kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+kotest-property = { group = "io.kotest", name = "kotest-property", version.ref = "kotest" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+jib = { id = "com.google.cloud.tools.jib", version.ref = "jib" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+
+[bundles]
+spring-web = ["spring-boot-starter-web", "spring-boot-starter-validation", "spring-boot-starter-actuator"]
+spring-data = ["spring-boot-starter-data-jpa", "postgresql", "flyway-core", "flyway-database-postgresql"]
+spring-security = ["spring-boot-starter-security", "spring-security-test"]
+testing = ["spring-boot-starter-test", "kotest-runner-junit5", "kotest-assertions-core", "kotest-property", "mockk"]
+testcontainers = ["testcontainers", "testcontainers-postgresql", "testcontainers-junit-jupiter"]
+monitoring = ["micrometer-registry-prometheus", "logstash-logback-encoder"]
