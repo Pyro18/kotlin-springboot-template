@@ -3,7 +3,7 @@
 [![Kotlin](https://img.shields.io/badge/kotlin-1.9.25-blue.svg)](http://kotlinlang.org)
 [![Spring Boot](https://img.shields.io/badge/spring--boot-3.3.4-green.svg)](https://spring.io/projects/spring-boot)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![CI/CD](https://github.com/yourusername/spring-app/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/spring-app/actions)
+[![CI/CD](https://github.com/yourusername/spring-app/actions/workflows/ci.yml/badge.svg)](https://github.com/Pyro18/kotlin-springboot-template/actions)
 
 Production-ready template for Kotlin + Spring Boot applications with all modern best practices.
 
@@ -82,7 +82,7 @@ kotlin-springboot-template/
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/kotlin-springboot-template.git
+git clone https://github.com/Pyro18/kotlin-springboot-template.git
 cd kotlin-springboot-template
 ```
 
@@ -325,7 +325,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 For issues or questions:
 
-* 🐛 Issues: [GitHub Issues](https://github.com/Pyro18/spring-app/issues)
+* 🐛 Issues: [GitHub Issues](https://github.com/Pyro18/kotlin-springboot-template/issues)
 
 ---
 
