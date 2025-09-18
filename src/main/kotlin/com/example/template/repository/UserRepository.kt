@@ -29,6 +29,13 @@ interface UserRepository : JpaRepository<User, Long>, JpaSpecificationExecutor<U
 
     fun existsByEmailIgnoreCase(email: String): Boolean
 
+    @Query("""
+    SELECT u FROM User u 
+    WHERE u.username = :usernameOrEmail 
+    OR u.email = :usernameOrEmail
+    """)
+    fun findByUsernameOrEmail(@Param("usernameOrEmail") usernameOrEmail: String): User?
+
     // Paginated queries
     fun findByActive(active: Boolean, pageable: Pageable): Page<User>
 
