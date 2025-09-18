@@ -137,7 +137,7 @@ class SecurityConfig(
                     .contentSecurityPolicy {
                         it.policyDirectives("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';")
                     }
-                    .xssProtection { it.headerValue("1; mode=block") }
+                    .xssProtection { it.headerValue(org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK) }
                     .contentTypeOptions { }
                     .referrerPolicy { it.policy(org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN) }
                     .permissionsPolicy {
@@ -152,9 +152,9 @@ class SecurityConfig(
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration().apply {
             allowedOriginPatterns = allowedOrigins
-            allowedMethods = allowedMethods.split(",").map { it.trim() }
-            allowedHeaders = listOf(allowedHeaders)
-            exposedHeaders = exposedHeaders.split(",").map { it.trim() }
+            allowedMethods = this@SecurityConfig.allowedMethods.split(",").map { it.trim() }
+            allowedHeaders = this@SecurityConfig.allowedHeaders.split(",").map { it.trim() }
+            exposedHeaders = this@SecurityConfig.exposedHeaders.split(",").map { it.trim() }
             allowCredentials = this@SecurityConfig.allowCredentials
             maxAge = this@SecurityConfig.maxAge
         }

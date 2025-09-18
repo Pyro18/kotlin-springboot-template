@@ -214,7 +214,7 @@ class UserController(
         ApiResponse(responseCode = "404", description = "User not found", content = [Content()])
     )
     @PreAuthorize("#id == authentication.principal.id")
-    fun uploadAvatar(
+    suspend fun uploadAvatar(
         @PathVariable
         @Parameter(description = "User ID", required = true)
         id: Long,
@@ -298,7 +298,7 @@ class UserController(
         ApiResponse(responseCode = "200", description = "Export generated successfully")
     )
     @PreAuthorize("hasRole('ADMIN')")
-    fun exportUsers(
+    suspend fun exportUsers(
         @RequestParam(defaultValue = "CSV")
         @Parameter(description = "Export format", schema = Schema(allowableValues = ["CSV", "JSON", "EXCEL"]))
         format: String

@@ -1,9 +1,9 @@
 # 🚀 Kotlin Spring Boot Production Template
 
-[![Kotlin](https://img.shields.io/badge/kotlin-1.9.25-blue.svg)](http://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/kotlin-2.1.10-blue.svg)](http://kotlinlang.org)
 [![Spring Boot](https://img.shields.io/badge/spring--boot-3.3.4-green.svg)](https://spring.io/projects/spring-boot)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![CI/CD](https://github.com/yourusername/spring-app/actions/workflows/ci.yml/badge.svg)](https://github.com/Pyro18/kotlin-springboot-template/actions)
+[![CI/CD](https://github.com/Pyro18/kotlin-springboot-template/actions/workflows/ci.yml/badge.svg)](https://github.com/Pyro18/kotlin-springboot-template/actions)
 
 Production-ready template for Kotlin + Spring Boot applications with all modern best practices.
 

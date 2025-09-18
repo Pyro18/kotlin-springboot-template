@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
-import java.security.Key
 import java.util.*
 import javax.crypto.SecretKey
 
@@ -44,10 +43,10 @@ class JwtTokenProvider(
         val expiryDate = Date(now.time + expiration)
 
         return Jwts.builder()
-            .setSubject(subject)
-            .setIssuedAt(now)
-            .setExpiration(expiryDate)
-            .signWith(key, SignatureAlgorithm.HS512)
+            .subject(subject)
+            .issuedAt(now)
+            .expiration(expiryDate)
+            .signWith(key)
             .compact()
     }
 
@@ -79,11 +78,11 @@ class JwtTokenProvider(
     }
 
     private fun getClaims(token: String): Claims {
-        return Jwts.parserBuilder()
-            .setSigningKey(key)
+        return Jwts.parser()
+            .verifyWith(key)
             .build()
-            .parseClaimsJws(token)
-            .body
+            .parseSignedClaims(token)
+            .payload
     }
 
     fun getExpirationDateFromToken(token: String): Date {

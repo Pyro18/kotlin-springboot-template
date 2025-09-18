@@ -132,9 +132,6 @@ data class UserResponseDto(
     @Schema(description = "Last name", example = "Doe")
     val lastName: String,
 
-    @Schema(description = "Full name", example = "John Doe")
-    val fullName: String = "$firstName $lastName",
-
     @Schema(description = "User role", example = "USER")
     val role: UserRole,
 
@@ -161,7 +158,11 @@ data class UserResponseDto(
     @Schema(description = "Last update timestamp", example = "2024-01-15T10:30:00")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     val updatedAt: LocalDateTime? = null
-)
+) {
+    @get:Schema(description = "Full name", example = "John Doe")
+    val fullName: String
+        get() = "$firstName $lastName"
+}
 
 @Schema(description = "User statistics")
 data class UserStatsDto(

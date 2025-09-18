@@ -10,7 +10,7 @@ plugins {
 	alias(libs.plugins.jib)
 	alias(libs.plugins.detekt)
 	alias(libs.plugins.ktlint)
-	kotlin("kapt") version "1.9.25"
+	kotlin("kapt") version "1.9.10"
 }
 
 group = "com.example"
@@ -61,6 +61,11 @@ dependencies {
 	// Functional Programming
 	implementation(libs.arrow.core)
 	implementation(libs.arrow.fx.coroutines)
+
+	// JWT
+	implementation(libs.jjwt.api)
+	runtimeOnly(libs.jjwt.impl)
+	runtimeOnly(libs.jjwt.jackson)
 
 	// Configuration Processor
 	kapt(libs.spring.boot.configuration.processor)

@@ -86,7 +86,7 @@ spring:
       time-to-live: 3600000
       cache-null-values: false
       enable-statistics: true
-      key-prefix: ${spring.application.name}:
+      key-prefix: "${spring.application.name}:"
 
   jackson:
     default-property-inclusion: non_null
@@ -180,9 +180,6 @@ management:
     tags:
       application: ${spring.application.name}
       environment: ${spring.profiles.active}
-    export:
-      prometheus:
-        enabled: true
 
   health:
     db:
@@ -196,6 +193,10 @@ management:
       enabled: true
     readinessstate:
       enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 springdoc:
   api-docs:
@@ -295,24 +296,24 @@ logging:
 
 ---
 # Test profile
-spring:
-  config:
-    activate:
-      on-profile: test
-
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    database-platform: org.hibernate.dialect.H2Dialect
-
-  flyway:
-    enabled: false
+#spring:
+#  config:
+#    activate:
+#      on-profile: test
+#
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    database-platform: org.hibernate.dialect.H2Dialect
+#
+#  flyway:
+#    enabled: false
 
 ---
 # Production profile
